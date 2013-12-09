@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt4 import QtCore, QtGui, uic  # подключает основные модули PyQt
+from PyQt4 import QtCore, QtGui, QtSql, uic  # подключает основные модули PyQt
 from db import *
 from google import *
 import logging
@@ -15,10 +15,22 @@ class MainForm(QtGui.QDialog):
         # динамически загружает визуальное представление формы
         uic.loadUi("ui/mainform.ui", self)
 
+        dbase = QtSql.QSqlDatabase.addDatabase('QSQLITE')
+        #файл базы
+        dbase.setDatabaseName('database.db') 
+        dbase.open()
+
+        # view = self.tV_contacts()
+        model = QtSql.QSqlTableModel()
+        model.setTable('contacts')
+        model.select()
+        model.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
+        self.tV_contacts.setModel(model)
+
         self.google_thread = GoogleThread()
         self.add_to_db_thread = Add_to_DBThread()
         self.get_contacts_into_db_thread = Get_Contacts_into_DB()
-        self.get_contacts_into_db_thread.start()
+        # self.get_contacts_into_db_thread.start()
 
         # связывает событие нажатия на кнопку с методом
         self.connect(self.b_get_from_google,

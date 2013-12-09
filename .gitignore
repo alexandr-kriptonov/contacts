@@ -36,3 +36,6 @@ nosetests.xml
 .pydevproject
 
 database.db
+/my_db.sqlite
+/mylog.log
+/test.py

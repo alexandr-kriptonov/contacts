@@ -340,7 +340,7 @@
     <string>status</string>
    </property>
   </widget>
-  <widget class="QTableView" name="tableView">
+  <widget class="QTableView" name="tV_contacts">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -348,6 +348,9 @@
      <width>761</width>
      <height>192</height>
     </rect>
+   </property>
+   <property name="gridStyle">
+    <enum>Qt::DashLine</enum>
    </property>
   </widget>
  </widget>
