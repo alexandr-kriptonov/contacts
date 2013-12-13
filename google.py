@@ -7,11 +7,13 @@ import gdata.contacts.data
 # import atom
 from PyQt4.QtCore import *
 
+
 def get_all_contacts(gd_client):
     query = gdata.contacts.client.ContactsQuery()
     query.max_results = 1000
     feed = gd_client.GetContacts(q=query)
     return feed.entry
+
 
 def google_contact_to_obj(g_contact):
     db_contact = {}
@@ -108,43 +110,39 @@ class GoogleThread(QThread):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self.db_contacts = {}
+
     def run(self):
-        self.username = ''
-        self.password = ''
+        self.username = 'alexandr.kriptonov@gmail.com'
+        self.password = '08093192S1h2I3p43000'
         # connect to Google Contacts
-        self.emit(SIGNAL("google_signal(QString)"), "CONNECT TO GOOGLE CONTACTS!")
+        self.emit(
+            SIGNAL(
+                "google_signal"),
+            "TRY CONNECT TO GOOGLE CONTACTS!")
         self.msleep(100)
-        try:
-            self.gd_client = gdata.contacts.client.ContactsClient()
-            self.gd_client.ClientLogin(self.username, self.password,self.gd_client.source)
-            self.emit(SIGNAL("set_google_status"), True)
-            self.Google_Contacts = get_all_contacts(self.gd_client)
-            self.db_contacts = {}
-            count = 0
-            for i in self.Google_Contacts:
-                count += 1
+        self.gd_client = gdata.contacts.client.ContactsClient()
+        self.gd_client.ClientLogin(
+            self.username,
+            self.password,
+            self.gd_client.source)
+        self.emit(SIGNAL("set_google_status"), True)
+        self.Google_Contacts = get_all_contacts(self.gd_client)
+        self.db_contacts = {}
+        count = 0
+        for i in self.Google_Contacts:
+            count += 1
 
-            round_percent = int(round(100/count))
-            for i,g_contact in enumerate(self.Google_Contacts):
-                self.db_contacts[i] = google_contact_to_obj(g_contact)
-                self.emit(SIGNAL("google_signal(QString)"), "contact(%s) processed" % self.db_contacts[i]["full_name"])
-                self.emit(SIGNAL("set_progress_bar"), i*round_percent)
-                self.msleep(1)
-            self.emit(SIGNAL("set_progress_bar"), 100)
-            self.emit(SIGNAL("google_signal(QString)"), "Disconeccted from Google")
-            # print self.db_contacts
-            self.emit(SIGNAL("set_google_status"), False)
-            self.sleep(1)
-            return self.db_contacts
-
-        except Exception, e:
-            er_header = u"""<font color = red>%s : %s<\\font>""" % (u"ERROR!",e.message)
-            er_msg = u"""%s\nusername: %s\npassword: %s""" % (
-                u"DESCRIPTION:",
-                self.username,
-                self.password
-                )
-            print("===start===")
-            self.error_form.set_text_error(er_header,er_msg)
-            print("===start===")
-            self.error_form.show()
+        round_percent = int(round(100/count))
+        for i, g_contact in enumerate(self.Google_Contacts):
+            self.db_contacts[i] = google_contact_to_obj(g_contact)
+            self.emit(
+                SIGNAL("google_signal"),
+                "contact(%s) processed" % self.db_contacts[i]["full_name"])
+            self.emit(SIGNAL("set_progress_bar"), i*round_percent)
+            self.msleep(1)
+        self.emit(SIGNAL("set_progress_bar"), 100)
+        self.emit(SIGNAL("google_signal(QString)"), "Disconeccted from Google")
+        # print self.db_contacts
+        self.emit(SIGNAL("set_google_status"), False)
+        self.sleep(1)
+        return self.db_contacts
