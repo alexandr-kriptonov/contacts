@@ -3,10 +3,11 @@ from PyQt4 import QtCore, QtGui, QtSql, uic  # подключает основн
 from db import *
 from google import *
 import logging
+from ui.informform import MainDialog
 
 
 # прототип главной формы
-class MainForm(QtGui.QDialog):
+class MainForm(QtGui.QMainWindow):
 
     # конструктор
     def __init__(self):

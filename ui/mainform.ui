@@ -1,358 +1,361 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
-    <height>744</height>
+    <width>778</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>511</x>
-     <y>4</y>
-     <width>129</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="b_get_from_google">
-      <property name="text">
-       <string>Get from Google</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="b_edit_contact">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Edit contact</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="b_new_contact">
-      <property name="text">
-       <string>New contact</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QLineEdit" name="le_search">
-   <property name="geometry">
-    <rect>
-     <x>4</x>
-     <y>3</y>
-     <width>151</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QListView" name="lv_contacts">
-   <property name="geometry">
-    <rect>
-     <x>-1</x>
-     <y>29</y>
-     <width>263</width>
-     <height>320</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="gb_contact_inf">
-   <property name="geometry">
-    <rect>
-     <x>261</x>
-     <y>1</y>
-     <width>250</width>
-     <height>478</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Contact information</string>
-   </property>
-   <widget class="QDialogButtonBox" name="buttonBox">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="le_search">
     <property name="geometry">
      <rect>
       <x>3</x>
-      <y>443</y>
-      <width>230</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Discard|QDialogButtonBox::Save</set>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="le_fullname_contact">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>44</y>
-      <width>230</width>
+      <y>3</y>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QProgressBar" name="pBar">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>20</y>
-      <width>220</width>
+      <x>0</x>
+      <y>406</y>
+      <width>258</width>
       <height>20</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Full name contact</string>
+    <property name="value">
+     <number>0</number>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QTableView" name="tV_contacts">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>220</width>
+      <x>9</x>
+      <y>490</y>
+      <width>761</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::DashLine</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_terminal">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>430</y>
+      <width>260</width>
       <height>14</height>
      </rect>
     </property>
     <property name="text">
-     <string>Phone</string>
+     <string>status</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="le_phone_contact">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>230</width>
-      <height>20</height>
+      <x>510</x>
+      <y>4</y>
+      <width>129</width>
+      <height>151</height>
      </rect>
     </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="b_get_from_google">
+       <property name="text">
+        <string>Get from Google</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="b_edit_contact">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Edit contact</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="b_new_contact">
+       <property name="text">
+        <string>New contact</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QGroupBox" name="gb_contact_inf">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>120</y>
-      <width>220</width>
-      <height>14</height>
+      <x>260</x>
+      <y>1</y>
+      <width>250</width>
+      <height>478</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Contact information</string>
+    </property>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>3</x>
+       <y>443</y>
+       <width>230</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Discard|QDialogButtonBox::Save</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_fullname_contact">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>44</y>
+       <width>230</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>20</y>
+       <width>220</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Full name contact</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>220</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Phone</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_phone_contact">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>230</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>220</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Birthday</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_birthday_contact">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>230</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>220</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>e-mail</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_email_contact">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>230</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>220</y>
+       <width>220</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Google ID</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="le_id_google">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>230</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>350</y>
+      <width>255</width>
+      <height>54</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>DB STATUS:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>GOOGLE STATUS:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="l_db_status">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="text">
+        <string>DISCONNECTED!</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="l_google_status">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>DISCONNECTED!</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="but_search">
+    <property name="geometry">
+     <rect>
+      <x>157</x>
+      <y>3</y>
+      <width>100</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Birthday</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="le_birthday_contact">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>140</y>
-      <width>230</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>220</width>
-      <height>14</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-    <property name="text">
-     <string>e-mail</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="le_email_contact">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>230</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>220</y>
-      <width>220</width>
-      <height>14</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Google ID</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="le_id_google">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>240</y>
-      <width>230</width>
-      <height>20</height>
-     </rect>
+     <string>Search</string>
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="gridLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>2</x>
-     <y>350</y>
-     <width>255</width>
-     <height>54</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>DB STATUS:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>GOOGLE STATUS:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="l_db_status">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <italic>false</italic>
-        <bold>true</bold>
-        <underline>false</underline>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="text">
-       <string>DISCONNECTED!</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::AutoText</enum>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="l_google_status">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>DISCONNECTED!</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QPushButton" name="but_search">
-   <property name="geometry">
-    <rect>
-     <x>158</x>
-     <y>3</y>
-     <width>100</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Search</string>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="pBar">
-   <property name="geometry">
-    <rect>
-     <x>1</x>
-     <y>406</y>
-     <width>258</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_terminal">
+  <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>430</y>
-     <width>260</width>
-     <height>14</height>
+     <y>0</y>
+     <width>778</width>
+     <height>19</height>
     </rect>
    </property>
-   <property name="text">
-    <string>status</string>
-   </property>
   </widget>
-  <widget class="QTableView" name="tV_contacts">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>490</y>
-     <width>761</width>
-     <height>192</height>
-    </rect>
-   </property>
-   <property name="gridStyle">
-    <enum>Qt::DashLine</enum>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
