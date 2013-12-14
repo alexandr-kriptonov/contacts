@@ -3,6 +3,7 @@ from PyQt4.QtCore import SIGNAL
 from PyQt4 import QtCore, QtSql
 import classes.dbconnection as dbconnection
 from ui.editdb import EditDBForm
+from ui.editcontact import EditContact
 
 
 class AllSlots(object):
@@ -99,6 +100,12 @@ class AllSlots(object):
             self.b_edit_db_on_click)
 
         self.connect(
+            self.b_edit_contact,
+            SIGNAL(
+                "clicked()"),
+            self.b_edit_contact_on_click)
+
+        self.connect(
             self.b_quit,
             SIGNAL(
                 "clicked()"),
@@ -179,6 +186,16 @@ class AllSlots(object):
             "contacts",
             self)
         self.editor.show()
+        self.setDisabled(True)
+
+    def b_edit_contact_on_click(self):
+        self.edit_contact = EditContact(
+            "QSQLITE",
+            "database.db",
+            "contacts",
+            "Бабушка",
+            self)
+        self.edit_contact.show()
         self.setDisabled(True)
 
     def add_to_db_thread_on_finished(self):
