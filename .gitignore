@@ -42,3 +42,5 @@ database.db
 /database
 /cachedtable.py
 /connection.py
+/root_log.log
+/root_log.log.1
