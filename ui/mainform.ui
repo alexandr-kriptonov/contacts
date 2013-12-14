@@ -9,9 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
+    <width>414</width>
     <height>467</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>DejaVu Sans Mono</family>
+    <pointsize>7</pointsize>
+    <italic>true</italic>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -20,16 +27,6 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="le_search">
-    <property name="geometry">
-     <rect>
-      <x>3</x>
-      <y>3</y>
-      <width>260</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QProgressBar" name="pBar">
     <property name="geometry">
      <rect>
@@ -47,9 +44,9 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>69</y>
-      <width>198</width>
-      <height>351</height>
+      <y>89</y>
+      <width>140</width>
+      <height>331</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,7 +77,7 @@
      <item>
       <widget class="QPushButton" name="b_edit_db">
        <property name="text">
-        <string>&amp;Edit DB</string>
+        <string>(View / Edit) DB</string>
        </property>
       </widget>
      </item>
@@ -98,7 +95,7 @@
      <rect>
       <x>1</x>
       <y>350</y>
-      <width>255</width>
+      <width>261</width>
       <height>54</height>
      </rect>
     </property>
@@ -161,9 +158,9 @@
     <property name="geometry">
      <rect>
       <x>3</x>
-      <y>30</y>
+      <y>37</y>
       <width>260</width>
-      <height>311</height>
+      <height>310</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -212,34 +209,78 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboB_search">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>2</y>
-      <width>200</width>
-      <height>22</height>
+      <y>0</y>
+      <width>140</width>
+      <height>82</height>
      </rect>
     </property>
-    <property name="maxCount">
-     <number>3</number>
+    <property name="title">
+     <string>Option search</string>
     </property>
+    <widget class="QComboBox" name="comboB_search">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>20</y>
+       <width>120</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maxCount">
+      <number>3</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_search">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>50</y>
+       <width>120</width>
+       <height>14</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Description: %text%</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <zorder>comboB_search</zorder>
+    <zorder>l_search</zorder>
+    <zorder>le_search</zorder>
    </widget>
-   <widget class="QLabel" name="l_search">
+   <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>273</x>
-      <y>30</y>
-      <width>200</width>
-      <height>14</height>
+      <x>3</x>
+      <y>3</y>
+      <width>260</width>
+      <height>30</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Description: %text%</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>enter a search query and press &lt;ENTER&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_search"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -247,8 +288,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>474</width>
-     <height>19</height>
+     <width>414</width>
+     <height>15</height>
     </rect>
    </property>
   </widget>
