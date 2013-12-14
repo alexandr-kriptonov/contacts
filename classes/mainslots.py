@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from PyQt4.QtCore import SIGNAL
 from PyQt4 import QtCore
+import classes.dbconnection as dbconnection
+from ui.editdb import EditDBForm
 
 
 class AllSlots(object):
@@ -84,7 +86,11 @@ class AllSlots(object):
             QtCore.Qt.QueuedConnection)
 
     def connect_main_slots(self):
-        pass
+        self.connect(
+            self.b_edit_db,
+            SIGNAL(
+                "clicked()"),
+            self.b_edit_db_on_click)
 
     def b_get_from_google_on_click(self):
         self.b_get_from_google.setDisabled(True)
@@ -131,3 +137,12 @@ class AllSlots(object):
 
     def set_StatusBar(self, MESSAGE="None"):
         self.statusBar().showMessage(MESSAGE)
+
+    def b_edit_db_on_click(self):
+        self.editor = EditDBForm(
+            "QSQLITE",
+            "database.db",
+            "contacts",
+            self)
+        self.editor.show()
+        self.setDisabled(True)

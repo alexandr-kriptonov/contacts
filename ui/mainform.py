@@ -17,18 +17,16 @@ class MainForm(QtGui.QMainWindow, MainClass, AllSlots):
         # динамически загружает визуальное представление формы
         uic.loadUi("ui/mainform.ui", self)
 
-        dbase = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        #файл базы
-        dbase.setDatabaseName('database.db')
-        dbase.open()
-
+        # dbase = QtSql.QSqlDatabase.addDatabase('QSQLITE')
+        # #файл базы
+        # dbase.setDatabaseName('database.db')
+        # dbase.open()
         # view = self.tV_contacts()
-        model = QtSql.QSqlTableModel()
-        model.setTable('contacts')
-        model.select()
-        model.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
-        self.tV_contacts.setModel(model)
-
+        # model = QtSql.QSqlTableModel()
+        # model.setTable('contacts')
+        # model.select()
+        # model.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
+        # self.tV_contacts.setModel(model)
         self.logger = logging.getLogger(__name__)
         self.logger.debug("START!")
 
