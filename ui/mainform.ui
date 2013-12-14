@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>487</height>
+    <width>474</width>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
      <rect>
       <x>3</x>
       <y>3</y>
-      <width>151</width>
+      <width>260</width>
       <height>20</height>
      </rect>
     </property>
@@ -43,33 +43,20 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QLabel" name="l_terminal">
-    <property name="geometry">
-     <rect>
-      <x>-1</x>
-      <y>430</y>
-      <width>260</width>
-      <height>14</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>status</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>-1</y>
-      <width>129</width>
-      <height>191</height>
+      <y>69</y>
+      <width>198</width>
+      <height>351</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="b_get_from_google">
        <property name="text">
-        <string>Get from Google</string>
+        <string>Update DB from Google</string>
        </property>
       </widget>
      </item>
@@ -94,6 +81,13 @@
       <widget class="QPushButton" name="b_edit_db">
        <property name="text">
         <string>&amp;Edit DB</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="b_quit">
+       <property name="text">
+        <string>&amp;Quit</string>
        </property>
       </widget>
      </item>
@@ -163,17 +157,88 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="but_search">
+   <widget class="QListView" name="lV_main">
     <property name="geometry">
      <rect>
-      <x>157</x>
-      <y>3</y>
-      <width>100</width>
-      <height>24</height>
+      <x>3</x>
+      <y>30</y>
+      <width>260</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>CrossCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="tabKeyNavigation">
+     <bool>false</bool>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="dragDropOverwriteMode">
+     <bool>false</bool>
+    </property>
+    <property name="dragDropMode">
+     <enum>QAbstractItemView::NoDragDrop</enum>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
+    <property name="movement">
+     <enum>QListView::Static</enum>
+    </property>
+    <property name="flow">
+     <enum>QListView::TopToBottom</enum>
+    </property>
+    <property name="resizeMode">
+     <enum>QListView::Adjust</enum>
+    </property>
+    <property name="selectionRectVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboB_search">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>2</y>
+      <width>200</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maxCount">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_search">
+    <property name="geometry">
+     <rect>
+      <x>273</x>
+      <y>30</y>
+      <width>200</width>
+      <height>14</height>
      </rect>
     </property>
     <property name="text">
-     <string>Search</string>
+     <string>Description: %text%</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -182,7 +247,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>406</width>
+     <width>474</width>
      <height>19</height>
     </rect>
    </property>

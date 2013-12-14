@@ -18,6 +18,8 @@ def main():
     except Exception, e:
         error = MainDialog()
         error.show("error", "MAIN ERROR!", u"%s" % e.message)
+        logging.error(e.message)
+        sys.exit(1)
     app.exec_()  # запускает приложение
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from google_thread import GoogleThread
 import logging
 from classes.mainclass import MainClass
 from classes.mainslots import AllSlots
+import classes.dbconnection as dbconnection
 
 
 # прототип главной формы
@@ -17,18 +18,9 @@ class MainForm(QtGui.QMainWindow, MainClass, AllSlots):
         # динамически загружает визуальное представление формы
         uic.loadUi("ui/mainform.ui", self)
 
-        # dbase = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        # #файл базы
-        # dbase.setDatabaseName('database.db')
-        # dbase.open()
-        # view = self.tV_contacts()
-        # model = QtSql.QSqlTableModel()
-        # model.setTable('contacts')
-        # model.select()
-        # model.setEditStrategy(QtSql.QSqlTableModel.OnFieldChange)
-        # self.tV_contacts.setModel(model)
         self.logger = logging.getLogger(__name__)
-        self.logger.debug("START!")
+        self.set_google_status()
+        self.set_db_status()
 
         self.google_thread = GoogleThread()
         self.add_to_db_thread = Add_to_DBThread()
@@ -36,3 +28,9 @@ class MainForm(QtGui.QMainWindow, MainClass, AllSlots):
         # self.get_contacts_into_db_thread.start()
 
         self.connect_all_slots()
+
+    def closeEvent(self, arg):
+        self.to_log("INFO", "CLOSE MAIN WINDOW!")
+
+    def showEvent(self, arg):
+        self.to_log("INFO", "SHOW MAIN WINDOW!")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt4.QtCore import SIGNAL
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtSql
 import classes.dbconnection as dbconnection
 from ui.editdb import EditDBForm
 
@@ -85,6 +85,12 @@ class AllSlots(object):
             self.set_progress_bar,
             QtCore.Qt.QueuedConnection)
 
+        self.connect(
+            self.add_to_db_thread,
+            SIGNAL(
+                "finished()"),
+            self.add_to_db_thread_on_finished)
+
     def connect_main_slots(self):
         self.connect(
             self.b_edit_db,
@@ -92,13 +98,41 @@ class AllSlots(object):
                 "clicked()"),
             self.b_edit_db_on_click)
 
+        self.connect(
+            self.b_quit,
+            SIGNAL(
+                "clicked()"),
+            self.close)
+
+        self.connect(
+            self.le_search,
+            SIGNAL(
+                "returnPressed()"),
+            self.search_query)
+
+        self.search_query()
+
+        self.comboB_search.addItem(u"with the any letter")
+        self.comboB_search.addItem(u"with the first letter")
+        self.comboB_search.addItem(u"with the last letter")
+
+        self.connect(
+            self.comboB_search,
+            SIGNAL(
+                "currentIndexChanged(QString)"),
+            self.comboB_search_currentIndexChanged)
+
+        self.le_search.setText("")
+
+        self.comboB_search_currentIndexChanged()
+
     def b_get_from_google_on_click(self):
         self.b_get_from_google.setDisabled(True)
         self.google_thread.db_contacts = self.google_thread.start()
 
     def google_thread_on_started(self):
         # Вызывается при запуске потока
-        self.set_StatusBar("Вызван метод google_thread_on_started()")
+        self.set_StatusBar(u"Вызван метод google_thread_on_started()")
 
     def google_thread_on_finished(self):
         # Вызывается при завершении потока
@@ -146,3 +180,58 @@ class AllSlots(object):
             self)
         self.editor.show()
         self.setDisabled(True)
+
+    def add_to_db_thread_on_finished(self):
+        self.search_query()
+
+    def search_query(self):
+        self.dbdriver = "QSQLITE"
+        self.dbname = "database.db"
+        self.dbtable = "contacts"
+
+        if dbconnection.createConnection(self.dbdriver, self.dbname):
+            self.comboB_search_currentIndexChanged()
+            self.model = QtSql.QSqlTableModel(self)
+            self.model.setQuery(QtSql.QSqlQuery(self.query_search))
+            self.to_log(
+                "INFO",
+                """
+                %s"""
+                % self.query_search)
+            self.lV_main.setModel(self.model)
+
+    def comboB_search_currentIndexChanged(self):
+        _index_search = self.comboB_search.currentIndex()
+
+        if _index_search == 0:
+            self.query_search = """
+                SELECT full_name from contacts
+                WHERE full_name LIKE %s
+                ORDER BY full_name;
+                """ % (" '%%%s%%' " % self.le_search.text())
+            self.l_search.setText("Description: %%text%%")
+            return True
+        elif _index_search == 1:
+            self.query_search = """
+                SELECT full_name from contacts
+                WHERE full_name LIKE %s
+                ORDER BY full_name;
+                """ % (" '%s%%' " % self.le_search.text())
+            self.l_search.setText("Description: text%%")
+            return True
+        elif _index_search == 2:
+            self.query_search = """
+                SELECT full_name from contacts
+                WHERE full_name LIKE %s
+                ORDER BY full_name;
+                """ % (" '%%%s' " % self.le_search.text())
+            self.l_search.setText("Description: %%text")
+            return True
+        else:
+            self.query_search = """
+                SELECT full_name from contacts
+                WHERE full_name LIKE %s
+                ORDER BY full_name;
+                """ % (" '%%%s%%' " % self.le_search.text())
+            self.l_search.setText("Description: %%text%%")
+            return True
