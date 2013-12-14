@@ -17,13 +17,4 @@ def createConnection(dbdriver, dbname):
             QtGui.QMessageBox.Cancel,
             QtGui.QMessageBox.NoButton)
         return False
-
-    # query = QtSql.QSqlQuery()
-    # query.exec_("create table person(id int primary key, "
-    #             "firstname varchar(20), lastname varchar(20))")
-    # query.exec_("insert into person values(101, 'Danny', 'Young')")
-    # query.exec_("insert into person values(102, 'Christine', 'Holand')")
-    # query.exec_("insert into person values(103, 'Lars', 'Gordon')")
-    # query.exec_("insert into person values(104, 'Roberto', 'Robitaille')")
-    # query.exec_("insert into person values(105, 'Maria', 'Papadopoulos')")
     return True

@@ -58,19 +58,19 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="b_edit_contact">
+      <widget class="QPushButton" name="b_new_contact">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Edit contact</string>
+        <string>New contact</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="b_new_contact">
+      <widget class="QPushButton" name="b_edit_contact">
        <property name="text">
-        <string>New contact</string>
+        <string>&amp;Edit contact</string>
        </property>
       </widget>
      </item>
@@ -250,9 +250,6 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <zorder>comboB_search</zorder>
-    <zorder>l_search</zorder>
-    <zorder>le_search</zorder>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
@@ -260,7 +257,7 @@
       <x>3</x>
       <y>3</y>
       <width>260</width>
-      <height>30</height>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">

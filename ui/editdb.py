@@ -37,7 +37,7 @@ class EditDBForm(QtGui.QWidget):
             self.model.database().rollback()
             QtGui.QMessageBox.warning(
                 self,
-                "Editor DD",
+                "Editor DB",
                 "The database reported an error: %s"
                 % self.model.lastError().text()
             )
