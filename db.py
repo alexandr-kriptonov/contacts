@@ -2,6 +2,9 @@
 import sqlalchemy as sa
 from sqlalchemy.orm import mapper, sessionmaker
 from PyQt4.QtCore import *
+import logging
+from classes.mainclass import MainClass
+from classes.emitclass import EmitClass
 
 engine = sa.create_engine("sqlite:///database.db", echo=True)
 metadata = sa.MetaData()
@@ -35,17 +38,19 @@ mapper(Contact, contacts_table)
 Session = sessionmaker(bind=engine)
 
 
-class Add_to_DBThread(QThread):
+class Add_to_DBThread(QThread, MainClass, EmitClass):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self.db_contacts = {}
+        self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.emit(SIGNAL("db_signal(QString)"), "OPEN SESSION TO DB!")
+        self.to_log("INFO", "Open session to db")
         self.msleep(100)
-        self.emit(SIGNAL("set_db_status"), True)
+        self.set_my_status(True)
         self.session = Session()
         self.emit(SIGNAL("set_progress_bar"), 0)
+        self.set_progress_bar(0)
         self.sleep(1)
         try:
             count = 0
@@ -55,9 +60,10 @@ class Add_to_DBThread(QThread):
             round_percent = int(round(100/count))
 
             for i in self.db_contacts:
-                self.emit(
-                    SIGNAL("db_signal"),
-                    "contact(%s) processed" % self.db_contacts[i]["full_name"])
+                _message = "contact(%s) processed" \
+                    % self.db_contacts[i]["full_name"]
+                self.to_log("DEBUG", _message)
+                self.set_status_bar(_message)
                 contact_to_db = Contact(
                     self.db_contacts[i]["id_google"],
                     self.db_contacts[i]["full_name"],
@@ -68,20 +74,23 @@ class Add_to_DBThread(QThread):
                     id_google=self.db_contacts[i]["id_google"]).first()
                 if not c:
                     self.session.add(contact_to_db)
-                    self.log.info(
-                        u"add contact(%s)!" % self.db_contacts[i]["full_name"])
+                    _message = "add contact(%s)!" \
+                        % self.db_contacts[i]["full_name"]
+                    self.to_log("INFO", _message)
+                    self.set_status_bar(_message)
                 else:
-                    self.log.info(
-                        u"contact(%s) exists!"
-                        % self.db_contacts[i]["full_name"])
+                    _message = "contact(%s) exists!" \
+                        % self.db_contacts[i]["full_name"]
+                    self.to_log("INFO", _message)
+                    self.set_status_bar(_message)
                 self.session.commit()
-                self.emit(SIGNAL("set_progress_bar"), i*round_percent)
+                self.set_progress_bar(i*round_percent)
                 self.msleep(1)
         except Exception, e:
-            self.log.error(u"%s" % e.message)
-        self.emit(SIGNAL("set_progress_bar"), 100)
-        self.emit(SIGNAL("db_signal(QString)"), "Disconnected from DB")
-        self.emit(SIGNAL("set_db_status"), False)
+            self.to_log("EXCEPTION", e.message)
+        self.set_progress_bar(100)
+        self.to_log("INFO", "Disconnected from DB")
+        self.set_my_status(False)
 
 
 class Get_Contacts_into_DB(QThread):

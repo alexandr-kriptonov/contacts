@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PySide import QtGui
+from PyQt4 import QtGui
 
 
 class MainDialog(QtGui.QDialog):
@@ -13,7 +13,7 @@ class MainDialog(QtGui.QDialog):
             return False
         else:
             type_window = type_window.lower()
-            if type_window in ("information", "inf"):
+            if type_window in ("information", "info"):
                 result = self.informationMessage(TITLE, MESSAGE)
                 return result
             elif type_window in ("error", "err", "critical", "crit"):

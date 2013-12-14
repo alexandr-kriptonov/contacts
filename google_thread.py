@@ -6,6 +6,9 @@ import gdata.contacts.client
 import gdata.contacts.data
 # import atom
 from PyQt4.QtCore import *
+import logging
+from classes.mainclass import MainClass
+from classes.emitclass import EmitClass
 
 
 def get_all_contacts(gd_client):
@@ -106,43 +109,60 @@ def google_contact_to_obj(g_contact):
 #     google_update_contact(gd_client, contact, friend, vkGroup)
 
 
-class GoogleThread(QThread):
+class GoogleThread(QThread, MainClass, EmitClass):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self.db_contacts = {}
+        self.logger = logging.getLogger(__name__)
 
     def run(self):
+        self.to_log("INFO", "Google thread started!")
         self.username = 'alexandr.kriptonov@gmail.com'
         self.password = '08093192S1h2I3p43000'
-        # connect to Google Contacts
-        self.emit(
-            SIGNAL(
-                "google_signal"),
-            "TRY CONNECT TO GOOGLE CONTACTS!")
-        self.msleep(100)
+        self.to_log(
+            "INFO",
+            "Try connect ot google contacts(user:%s)" % self.username)
         self.gd_client = gdata.contacts.client.ContactsClient()
-        self.gd_client.ClientLogin(
-            self.username,
-            self.password,
-            self.gd_client.source)
-        self.emit(SIGNAL("set_google_status"), True)
-        self.Google_Contacts = get_all_contacts(self.gd_client)
-        self.db_contacts = {}
-        count = 0
-        for i in self.Google_Contacts:
-            count += 1
+        try:
+            # connect to Google Contacts
+            self.gd_client.ClientLogin(
+                self.username,
+                self.password,
+                self.gd_client.source)
+            status_run = True
+        except gdata.client.BadAuthentication:
+            _message = "%s(user: %s)" % (
+                "Incorrect username or password!", self.username)
+            self.to_log("ERROR", _message)
+            self.set_status_bar(_message)
+            self.show_last_message()
+            status_run = False
+        if status_run:
+            self.set_my_status(True)
+            self.set_progress_bar(0)
+            self.to_log("INFO", "Connected to google contacts")
+            self.Google_Contacts = get_all_contacts(self.gd_client)
+            self.db_contacts = {}
+            count = 0
+            for i in self.Google_Contacts:
+                count += 1
 
-        round_percent = int(round(100/count))
-        for i, g_contact in enumerate(self.Google_Contacts):
-            self.db_contacts[i] = google_contact_to_obj(g_contact)
-            self.emit(
-                SIGNAL("google_signal"),
-                "contact(%s) processed" % self.db_contacts[i]["full_name"])
-            self.emit(SIGNAL("set_progress_bar"), i*round_percent)
-            self.msleep(1)
-        self.emit(SIGNAL("set_progress_bar"), 100)
-        self.emit(SIGNAL("google_signal(QString)"), "Disconeccted from Google")
-        # print self.db_contacts
-        self.emit(SIGNAL("set_google_status"), False)
-        self.sleep(1)
+            round_percent = int(round(100/count))
+            for i, g_contact in enumerate(self.Google_Contacts):
+                self.db_contacts[i] = google_contact_to_obj(g_contact)
+                _message = "contact(%s) processed" \
+                    % self.db_contacts[i]["full_name"]
+                self.to_log("DEBUG", _message)
+                self.set_status_bar(_message)
+                self.set_progress_bar(i*round_percent)
+                self.msleep(1)
+            self.set_progress_bar(100)
+            self.to_log("INFO", "Disonnected to google contacts")
+            self.set_my_status(False)
+            self.sleep(1)
+        else:
+            self.db_contacts = None
+            self.to_log("INFO", "GoogleThread return None!")
+            self.show_last_message()
+
         return self.db_contacts
