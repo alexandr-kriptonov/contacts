@@ -45,7 +45,7 @@ class Add_to_DBThread(QThread, MainClass, EmitClass):
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.to_log("INFO", "Open session to db")
+        self.to_log("INFO", "Open session to db(Add_to_DBThread)")
         self.msleep(100)
         self.set_my_status(True)
         self.session = Session()
@@ -93,21 +93,25 @@ class Add_to_DBThread(QThread, MainClass, EmitClass):
         self.set_my_status(False)
 
 
-class Get_Contacts_into_DB(QThread):
+class Get_Contacts_into_DBThread(QThread, MainClass, EmitClass):
     def __init__(self, parent=None):
         QThread.__init__(self, parent)
         self.db_contacts = {}
+        self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.emit(SIGNAL("db_signal(QString)"), "OPEN SESSION TO DB!")
+        self.to_log("INFO", "Open session to db(Get_Contacts_into_DBThread)")
         self.msleep(100)
-        self.emit(SIGNAL("set_db_status"), True)
+        self.set_my_status(True)
         self.session = Session()
-        self.emit(SIGNAL("set_progress_bar"), 0)
+        self.set_progress_bar(0)
         self.sleep(1)
-
         try:
             for contact in self.session.query(Contact):
-                print contact, "\n\n"
+                # self.to_log('INFO', str(contact))
+                pass
         except Exception, e:
-            self.log.error(u"%s" % e.message)
+            self.to_log("EXCEPTION", e.message)
+
+        self.db_contacts = None
+        return self.db_contacts

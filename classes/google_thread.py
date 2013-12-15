@@ -114,11 +114,11 @@ class GoogleThread(QThread, MainClass, EmitClass):
         QThread.__init__(self, parent)
         self.db_contacts = {}
         self.logger = logging.getLogger(__name__)
+        self.username = 'alexandr.kriptonov@gmail.com'
+        self.password = '08093192S1h2I3p43000'
 
     def run(self):
         self.to_log("INFO", "Google thread started!")
-        self.username = 'alexandr.kriptonov@gmail.com'
-        self.password = '08093192S1h2I3p43000'
         self.to_log(
             "INFO",
             "Try connect ot google contacts(user:%s)" % self.username)
