@@ -14,6 +14,10 @@ class AllSlots(object):
         self.connect_add_db_thread_slots()
 
     def connect_main_slots(self):
+###################################
+# MAIN SLOTS                                                                   #
+###################################
+
         self.connect(
             self.b_edit_db,
             SIGNAL("clicked()"),
@@ -63,11 +67,20 @@ class AllSlots(object):
 
         self.comboB_search_currentIndexChanged()
 
-    def connect_google_thread_slots(self):
         self.connect(
             self.b_get_from_google,
             SIGNAL("clicked()"),
             self.b_get_from_google_on_click)
+
+        self.connect(
+            self.b_get_from_db,
+            SIGNAL("clicked()"),
+            self.b_get_from_db_on_click)
+
+    def connect_google_thread_slots(self):
+####################################
+# GOOGLE_THREAD SLOTS                                                  #
+####################################
 
         self.connect(
             self.google_thread,
@@ -87,6 +100,12 @@ class AllSlots(object):
 
         self.connect(
             self.google_thread,
+            SIGNAL("set_progress_bar"),
+            self.set_progress_bar,
+            QtCore.Qt.QueuedConnection)
+
+        self.connect(
+            self.google_thread,
             SIGNAL("thread_error"),
             self.google_thread_error,
             QtCore.Qt.QueuedConnection)
@@ -98,17 +117,24 @@ class AllSlots(object):
             QtCore.Qt.QueuedConnection)
 
     def connect_add_db_thread_slots(self):
+####################################
+# ADD_DB_THREAD SLOTS                                                   #
+####################################
+
+        self.connect(
+            self.add_to_db_thread,
+            SIGNAL("started()"),
+            self.add_to_db_thread_on_started)
+
+        self.connect(
+            self.add_to_db_thread,
+            SIGNAL("finished()"),
+            self.add_to_db_thread_on_finished)
 
         self.connect(
             self.add_to_db_thread,
             SIGNAL("set_my_status"),
             self.set_db_status,
-            QtCore.Qt.QueuedConnection)
-
-        self.connect(
-            self.google_thread,
-            SIGNAL("set_progress_bar"),
-            self.set_progress_bar,
             QtCore.Qt.QueuedConnection)
 
         self.connect(
@@ -123,7 +149,35 @@ class AllSlots(object):
             self.set_progress_bar,
             QtCore.Qt.QueuedConnection)
 
+    def connect_get_contacts_into_db_thread(self):
+####################################
+# GET_CONTACT_INTO_DB_THREAD SLOTS                           #
+####################################
+
         self.connect(
-            self.add_to_db_thread,
+            self.get_contacts_into_db_thread,
+            SIGNAL("started()"),
+            self.get_contacts_into_db_thread_on_started)
+
+        self.connect(
+            self.get_contacts_into_db_thread,
             SIGNAL("finished()"),
-            self.add_to_db_thread_on_finished)
+            self.get_contacts_into_db_thread_on_finished)
+
+        self.connect(
+            self.get_contacts_into_db_thread,
+            SIGNAL("set_my_status"),
+            self.set_db_status,
+            QtCore.Qt.QueuedConnection)
+
+        self.connect(
+            self.get_contacts_into_db_thread,
+            SIGNAL("set_status_bar"),
+            self.set_StatusBar,
+            QtCore.Qt.QueuedConnection)
+
+        self.connect(
+            self.get_contacts_into_db_thread,
+            SIGNAL("set_progress_bar"),
+            self.set_progress_bar,
+            QtCore.Qt.QueuedConnection)

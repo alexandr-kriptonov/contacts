@@ -443,6 +443,19 @@
     <zorder>verticalLayoutWidget_3</zorder>
     <zorder>verticalLayoutWidget_4</zorder>
    </widget>
+   <widget class="QPushButton" name="b_get_from_db">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>290</y>
+      <width>171</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Update Google contacts from DB</string>
+    </property>
+   </widget>
    <zorder>pBar</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>gridLayoutWidget</zorder>
@@ -452,6 +465,7 @@
    <zorder>label_8</zorder>
    <zorder>label_4</zorder>
    <zorder>gb_contact_inf</zorder>
+   <zorder>b_get_from_db</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

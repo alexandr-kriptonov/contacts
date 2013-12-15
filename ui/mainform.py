@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui, QtSql, uic  # подключает основные модули PyQt
-from db import *
-from google_thread import GoogleThread
+from classes.db import *
+from classes.google_thread import GoogleThread
 import logging
 from classes.mainclass import MainClass
 from classes.mainslots import AllSlots
@@ -25,10 +25,10 @@ class MainForm(QtGui.QMainWindow, MainClass, AllSlots, MainFunc):
 
         self.google_thread = GoogleThread()
         self.add_to_db_thread = Add_to_DBThread()
-        self.get_contacts_into_db_thread = Get_Contacts_into_DB()
-        # self.get_contacts_into_db_thread.start()
+        self.get_contacts_into_db_thread = Get_Contacts_into_DBThread()
 
         self.connect_all_slots()
+        # self.get_contacts_into_db_thread.start()
 
     def closeEvent(self, arg):
         self.to_log("INFO", "CLOSE MAIN WINDOW!")
