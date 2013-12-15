@@ -5,11 +5,12 @@ from google_thread import GoogleThread
 import logging
 from classes.mainclass import MainClass
 from classes.mainslots import AllSlots
+from classes.mainfunc import MainFunc
 import classes.dbconnection as dbconnection
 
 
 # прототип главной формы
-class MainForm(QtGui.QMainWindow, MainClass, AllSlots):
+class MainForm(QtGui.QMainWindow, MainClass, AllSlots, MainFunc):
 
     # конструктор
     def __init__(self):
