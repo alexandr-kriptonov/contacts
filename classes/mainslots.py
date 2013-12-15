@@ -3,7 +3,6 @@ from PyQt4.QtCore import SIGNAL
 from PyQt4 import QtCore, QtSql
 import classes.dbconnection as dbconnection
 from ui.editdb import EditDBForm
-from ui.editcontact import EditContact
 
 
 class AllSlots(object):
@@ -116,6 +115,23 @@ class AllSlots(object):
             SIGNAL(
                 "returnPressed()"),
             self.search_query)
+        self.connect(
+            self.lV_main,
+            SIGNAL(
+                "clicked(QModelIndex)"),
+            self.lV_main_on_click)
+
+        self.connect(
+            self.b_submit,
+            SIGNAL(
+                "clicked()"),
+            self.b_submit_on_click)
+
+        # self.connect(
+        #     self.b_revert,
+        #     SIGNAL(
+        #         "clicked("),
+        #     self.edit_contact_model.revertAll)
 
         self.search_query()
 
@@ -188,15 +204,15 @@ class AllSlots(object):
         self.editor.show()
         self.setDisabled(True)
 
+    def lV_main_on_click(self):
+        current_name = unicode(self.lV_main.currentIndex().data().toString())
+        if self.create_edit_contact_model(current_name):
+            self.set_edit_contact_data()
+            self.b_edit_contact.setDisabled(False)
+
     def b_edit_contact_on_click(self):
-        self.edit_contact = EditContact(
-            "QSQLITE",
-            "database.db",
-            "contacts",
-            "Бабушка",
-            self)
-        self.edit_contact.show()
-        self.setDisabled(True)
+        self.all_data_contact_setDisabled(False)
+        self.b_edit_contact.setDisabled(True)
 
     def add_to_db_thread_on_finished(self):
         self.search_query()
@@ -252,3 +268,86 @@ class AllSlots(object):
                 """ % (" '%%%s%%' " % self.le_search.text())
             self.l_search.setText("Description: %%text%%")
             return True
+
+    def create_edit_contact_model(self, contact_name=u""):
+        try:
+            self.edit_contact_model = QtSql.QSqlTableModel(self)
+            self.edit_contact_query = \
+                """
+                SELECT * from contacts
+                WHERE full_name LIKE '%s';
+                """ \
+            % contact_name
+            self.edit_contact_model.setQuery(
+                QtSql.QSqlQuery(self.edit_contact_query))
+            self.to_log(
+                "INFO",
+                """
+                %s"""
+                % self.edit_contact_query)
+            return True
+        except Exception, e:
+            self.to_log(
+                "EXCEPT",
+                """
+                %s"""
+                % e.message)
+            return False
+
+    def set_edit_contact_data(self):
+        try:
+            self.le_full_name.setText(
+                self.edit_contact_model.record(0).value(u"full_name").toString())
+
+            self.le_phone.setText(
+                self.edit_contact_model.record(0).value(u"phone").toString())
+
+            self.le_birthday.setText(
+                self.edit_contact_model.record(0).value(u"birthday").toString())
+
+            self.le_email.setText(
+                self.edit_contact_model.record(0).value(u"email").toString())
+
+            self.le_id_google.setText(
+                self.edit_contact_model.record(0).value(u"id_google").toString())
+        except Exception, e:
+            self.to_log(
+                "EXCEPT",
+                """
+                %s"""
+                % e.message)
+            return False
+
+    def all_data_contact_setDisabled(self, value):
+        self.le_full_name.setDisabled(value)
+        self.le_phone.setDisabled(value)
+        self.le_birthday.setDisabled(value)
+        self.le_email.setDisabled(value)
+        self.le_id_google.setDisabled(value)
+        self.b_submit.setDisabled(value)
+        self.b_revert.setDisabled(value)
+
+    def b_submit_on_click(self):
+        print dir(self.edit_contact_model.record(0).value(u"full_name"))
+        # self.edit_contact_model.record(0).value(u"full_name") = \
+        #     unicode(self.le_full_name.text)
+        # self.edit_contact_model.record(0).value(u"phone") = \
+        #     unicode(self.le_phone.text)
+        # self.edit_contact_model.record(0).value(u"birthday") = \
+        #     unicode(self.le_birthday.text)
+        # self.edit_contact_model.record(0).value(u"email") = \
+        #     unicode(self.le_email.text)
+        # self.edit_contact_model.record(0).value(u"id_google") = \
+        #     unicode(self.le_id_google.text)
+        self.edit_contact_model.database().transaction()
+        if self.edit_contact_model.submitAll():
+            self.edit_contact_model.database().commit()
+        else:
+            self.edit_contact_model.database().rollback()
+            QtGui.QMessageBox.warning(
+                self,
+                "Editor DB",
+                "The database reported an error: %s"
+                % self.edit_contact_model.lastError().text()
+            )
+        self.all_data_contact_setDisabled(True)
